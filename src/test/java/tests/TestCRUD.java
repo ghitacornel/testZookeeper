@@ -1,22 +1,24 @@
 package tests;
 
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import zookeeper.ZKManager;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class TestCRUD {
 
     private static ZKManager manager;
 
-    @BeforeClass
-    public static void setupAll() {
+    @BeforeEach
+    public void setupAll() {
         manager = new ZKManager();
     }
 
-    @AfterClass
-    public static void tearDownAll() {
+    @AfterEach
+    public void tearDownAll() {
         manager.close();
     }
 
@@ -28,7 +30,7 @@ public class TestCRUD {
         // read
         {
             Object data = manager.getZNodeData(path);
-            Assert.assertNull(data);
+            assertNull(data);
         }
 
         // create
@@ -39,7 +41,7 @@ public class TestCRUD {
         // read
         {
             Object data = manager.getZNodeData(path);
-            Assert.assertEquals("custom data", data);
+            assertEquals("custom data", data);
         }
 
         // update
@@ -50,7 +52,7 @@ public class TestCRUD {
         // read
         {
             Object data = manager.getZNodeData(path);
-            Assert.assertEquals("custom new data", data);
+            assertEquals("custom new data", data);
         }
 
         // delete
@@ -61,7 +63,7 @@ public class TestCRUD {
         // read
         {
             Object data = manager.getZNodeData(path);
-            Assert.assertNull(data);
+            assertNull(data);
         }
     }
 
